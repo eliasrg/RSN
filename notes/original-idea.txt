@@ -1,0 +1,57 @@
+SUM: ∙ n
+     ∙ m → [n m +].
+
+FACTORIAL: ∙ n
+→ [n #I =
+    ✓ #I
+    ✗ [(n #I -) factorial] m *].
+
+IF: ∙ cond
+    ∙ T
+    ∙ F
+→ [cond ✓ !T ✗ !F].
+
+
+FOR-LOOP: ∙ n
+          ∙ body
+→ [
+    HELPER: i → (i n < ✓ [i body. (i #I +) helper]).
+    #O helper
+].
+
+FOR-LOOP-II: ∙ n
+             ∙ body
+→ [ i: #O.
+    helper: i n < ✓ [i body. (i #I +) i←. helper].
+    helper].
+
+DIVIDES:
+∙ d, an integer
+∙ n, another integer
+→ [n #O <, do not handle negative integers here
+    ✓ false
+    ✗ n #O = ✓ true ✗ d (n d -) divides].
+
+
+FIZZ-BUZZ:
+→ #C [∙ n
+     → #XV  n divides ✓ [.._. .. __.. __.. ._... .._ __.. __..] print
+     ✗ #III n divides ✓ [.._. .. __.. __..] print
+     ✗ #V   n divides ✓ [._... .._ __.. __..] print
+     ✗ n print] for-loop, which finishes the definition.
+
+n: #XIV, the number 14.
+n: IV (∙ x → x #X +), the number 14.
+n: !(→ #XIV).
+
+
+| Declaration/assignment: `n: #XIV` or `#XIV n←` (`n←` is a setter).
+| Function application: `x f` (curried)
+| Conditional expression: `cond ✓ true ✗ false`
+| Lambda: (∙ x ∙ y → body)
+| Brackets: () and [] are the same ({} too?)
+| Comments: code, comment
+| Number literals: #I, #II, #III, #IV, #V, #VI, ...
+| String literals: [._... .._ __.. __..]
+| Lambdas without arguments `f: (→ x)` or `f: (! → x)`,
+| i.e. lazy expressions, are called like `!f`.

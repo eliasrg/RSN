@@ -1,0 +1,15 @@
+x: 5 -- Creates a new variable in the local scope
+5 x← -- Assigns to an existing variable
+
+type Scope = Map VariableName Value
+type VariableContext = [Scope] -- Stack of scopes, innermost first
+
+When entering a function or block, a new scope is created.
+When exiting, it is destroyed.
+
+When defining a lambda, its variable context is copied,
+flattened to a Scope, and set as its closure.
+When calling a function, the closure is inserted between
+the top of the context and the local function scope.
+When the function exits, the possibly modified closure is
+saved in an IORef.

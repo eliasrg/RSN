@@ -1,0 +1,39 @@
+-- GENERAL-PURPOSE LOOPS
+
+REP: · body -- The loop body (a lazy expression)
+     · n    -- The repeat count
+→ 0 n < ✓ {rec~. !body. body (n 1 -) rec}.
+
+FOR-LOOP:
+· body  -- The loop body (a function of the loop counter).
+· a b   -- The lower (inclusive) and upper (exclusive) range.
+→ [ i: a.
+    helper: ! → [i@. i b < ? (i body, (i 1 +) i←, !rec)].
+    !helper ].
+
+
+
+"INCREMENTING INSIDE A MUTABLE CLOSURE" print.
+funny: !
+→ [ i: 0.
+    ! → (i 1 +) i← ].
+
+f: !funny.
+
+<<!f print> 5 rep> 3 rep.
+
+
+
+"ITERATIVE FACTORIAL" print.
+n: 1.
+[k → (n@. (n k *) n←) print] 1 12 for-loop.
+
+
+"ITERATIVE FIBONACCI NUMBERS" print.
+a: 0, b: 1.
+<a@, b@. tmp: b, (a b +) b←, tmp a←. a print> 50 rep.
+
+
+"RECURSIVE FIBONACCI NUMBERS" print.
+fib: n → n 2 < ? n / [(n 1 -) rec] [(n 2 -) rec] +.
+(n → (n fib) print) 0 50 for-loop.

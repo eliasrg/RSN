@@ -1,0 +1,51 @@
+name:                rsn-interpreter
+version:             0.1.0.0
+github:              "eliasrg/RSN/interpreter"
+license:             BSD3
+author:              "Elias Riedel Gårding"
+maintainer:          "eliasrg@kth.se"
+copyright:           "2018 Elias Riedel Gårding"
+
+extra-source-files:
+- README.md
+- ChangeLog.md
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on Github at <https://github.com/eliasrg/rsn/interpreter#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- containers >= 0.5.10
+- transformers >= 0.4.40 && < 5
+- parsec == 3.1.13.0
+
+library:
+  source-dirs: src
+
+executables:
+  rsn-interpreter-exe:
+    main:                Main.hs
+    source-dirs:         app
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - rsn-interpreter
+
+tests:
+  rsn-interpreter-test:
+    main:                Spec.hs
+    source-dirs:         test
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    dependencies:
+    - rsn-interpreter

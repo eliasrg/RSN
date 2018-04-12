@@ -1,0 +1,32 @@
+"Effect of variable naming:" print.
+
+x: 0.
+f: (x: 0. <x@. 1 x←>).
+r1: (x: 2. !f. x). -- !f sets inner x to 1
+r2: (y: 2. !f. y). -- !f sets toplevel x to 1
+
+x print.  -- 1
+r1 print. -- 1
+r2 print. -- 2
+
+-- These two should be the same in any sensible language;
+-- the name of a new variable shouldn't matter!
+-- It happens because the function just changes the innermost
+-- variable called "x" in the outer variable context.
+
+-------------
+"Effect of parentheses:" print.
+
+z: 0.
+f: <z@. (z 1 +) z←>.
+g: (<z@. (z 1 +) z←>).
+
+-- h and j only work once because they don't restore z to the closure
+-- (which is impossible to write code for)
+h: <z~. (z 1 +) z←>.
+j: (<z~. (z 1 +) z←>).
+
+!f. z print. -- Increments z.
+!g. z print. -- Does not increment z.
+!h. z print. -- Increments z.
+!h. z print. -- Crashes.

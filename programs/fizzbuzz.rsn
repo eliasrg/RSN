@@ -1,0 +1,22 @@
+FOR-LOOP:
+· body  -- The loop body (a function of the loop counter).
+· a b   -- The lower (inclusive) and upper (exclusive) range.
+→ [ i: a.
+    helper: ! → [i@. i b < ? (i body, (i 1 +) i←, !rec)].
+    !helper ].
+
+
+divides: · d -- The divisor
+         · n -- The dividend
+→ n 0 = ✓ TRUE
+        ✗ n d < ✓ FALSE
+                ✗ {rec~. d (n d -) rec}.
+
+
+FIZZ-BUZZ: n
+→ {k → (15 k divides ✓ "fizzbuzz" ✗
+         3 k divides ✓ "fizz" ✗
+         5 k divides ✓ "buzz" ✗
+         k) print } 1 (n 1 +) for-loop.
+
+30 fizz-buzz.
